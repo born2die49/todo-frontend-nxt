@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Task } from "@/app/types/task";
-import { deleteTask, updateTask } from "@/app/services/tasks";
+import { Task } from "@/app/lib/definitions";
+import { deleteTask, updateTask } from "@/app/lib/tasks";
 
 type TaskItemProps = {
   task: Task;
@@ -14,7 +14,8 @@ export function TaskItem({ task }: TaskItemProps) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({ 
-    task_name: task.task_name, 
+    task_name: task.task_name,
+    due_date: task.due_date,
     description: task.description || '' 
   });
 
@@ -67,6 +68,14 @@ export function TaskItem({ task }: TaskItemProps) {
             type="text"
             name="task_name"
             value={editData.task_name}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded"
+          />
+
+          <input
+            type="date"
+            name="due_date"
+            value={editData.due_date!}
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
           />

@@ -1,11 +1,25 @@
-import { getTasks } from "../services/tasks";
-import { Task } from "../types/task";
-import { AddTaskForm } from "./components/AddTaskForm";
-import { TaskItem } from "./components/TaskItem";
+import { getTasks } from "@/app/lib/tasks";
+import { Task } from "@/app/lib/definitions";
+import { AddTaskForm } from "@/app/components/tasks/AddTaskForm";
+import { TaskItem } from "@/app/components/tasks/TaskItem";
+import serverApi from "@/app/lib/serverApi";
 
 
 const Tasks = async () => {
-    const tasks: Task[] = await getTasks();
+    // const tasks: Task[] = await getTasks();
+    let tasks: Task[] = [];
+    try {
+      const response = await serverApi('/api/tasks/'); // This calls your Django backend
+
+      if (response.ok) {
+        tasks = await response.json();
+      } else {
+        // This will show up in your terminal where you run `npm run dev`
+        console.error("Failed to fetch tasks:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching tasks:", error);
+    }
 
     return (
       <main className="p-8">

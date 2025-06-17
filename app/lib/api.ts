@@ -1,14 +1,3 @@
-import { getCookie } from "cookies-next";
-
-const getAccessToken = (): string | null => {
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
-    const token = getCookie('session_access_token');
-    return typeof token === 'string' ? token : null;
-}
-
 const apiService = {
   get: async function(url: string, params?: Record<string, any>): Promise<any> {
     const headers = await this.prepareHeaders();
@@ -16,8 +5,8 @@ const apiService = {
     if (params) {
       queryString = '?' + new URLSearchParams(params).toString();
     }
-    console.log('GET Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}${queryString}`);
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}${queryString}`, {
+    console.log('GET Request:', `${url}${queryString}`);
+    return fetch(`${url}${queryString}`, {
       method: 'GET',
       headers: headers,
     })
@@ -27,8 +16,8 @@ const apiService = {
 
   post: async function(url: string, data: any, isFormData: boolean = false): Promise<any> {
     const headers = await this.prepareHeaders(isFormData);
-    console.log('POST Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}`, data);
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    console.log('POST Request:', url, data);
+    return fetch(url, {
       method: 'POST',
       body: isFormData ? data : JSON.stringify(data),
       headers: headers,
@@ -39,8 +28,8 @@ const apiService = {
 
   postFormData: async function(url: string, formData: FormData): Promise<any> {
     const headers = await this.prepareHeaders(true);
-    console.log('POST Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}`, formData);
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    console.log('POST Request:', url, formData);
+    return fetch(url, {
       method: 'POST',
       body: formData,
       headers: headers,
@@ -51,8 +40,8 @@ const apiService = {
 
   put: async function(url: string, data: any, isFormData: boolean = false): Promise<any> {
     const headers = await this.prepareHeaders(isFormData);
-    console.log('PUT Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}`, data);
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    console.log('PUT Request:', url, data);
+    return fetch(url, {
       method: 'PUT',
       body: isFormData ? data : JSON.stringify(data),
       headers: headers,
@@ -63,8 +52,8 @@ const apiService = {
 
   patch: async function(url: string, data: any, isFormData: boolean = false): Promise<any> {
   const headers = await this.prepareHeaders(isFormData);
-  console.log('PATCH Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}`, data);
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+  console.log('PATCH Request:', url, data);
+  return fetch(url, {
     method: 'PATCH',
     body: isFormData ? data : JSON.stringify(data),
     headers: headers,
@@ -75,8 +64,8 @@ const apiService = {
 
   delete: async function(url: string): Promise<any> {
     const headers = await this.prepareHeaders();
-    console.log('DELETE Request:', `${process.env.NEXT_PUBLIC_API_URL}${url}`);
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    console.log('DELETE Request:', url);
+    return fetch(url, {
       method: 'DELETE',
       headers: headers,
     })
@@ -85,15 +74,11 @@ const apiService = {
   },
 
   prepareHeaders: async function(isFormData: boolean = false): Promise<HeadersInit> {
-    const accessToken = getAccessToken();
     const headers: HeadersInit = {
       'Accept': 'application/json',
     };
     if (!isFormData) {
       headers['Content-Type'] = 'application/json';
-    }
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return headers;
   },

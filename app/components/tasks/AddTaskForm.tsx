@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
 import { useState } from "react";
-import { createTask } from "@/app/services/tasks"; 
+import { createTask } from "@/app/lib/tasks"; 
 import { useRouter } from "next/navigation";
 
 export function AddTaskForm() {
   const [taskName, setTaskName] = useState('');
+  const [taskDueDate, setDueDate] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const router = useRouter();
 
@@ -23,11 +24,13 @@ export function AddTaskForm() {
     try {
       const newTask = await createTask({
         task_name: taskName,
+        due_date: taskDueDate,
         description: taskDescription,
       });
       console.log("Task created successfully:", newTask);
 
       setTaskName('');
+      setDueDate('');
       setTaskDescription('');
 
       router.refresh();
@@ -49,6 +52,17 @@ export function AddTaskForm() {
           className="w-full p-2 border rounded border-gray-400"
           value={taskName}
           onChange={e => setTaskName(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="due_date" className="block mb-1">Due Date</label>
+        <input
+          type="date"
+          id="task_name"
+          className="w-full p-2 border rounded border-gray-400"
+          value={taskDueDate}
+          onChange={e => setDueDate(e.target.value)}
         />
       </div>
 
