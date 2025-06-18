@@ -1,9 +1,10 @@
-import Tasks from "./(auth)/tasks/page";
+import HomePage from "./components/layout/HomePage";
+import TaskList from "./components/tasks/TaskList";
 
 export default async function Home() {
   return (
     <div>
-      <Tasks/>
+      <HomePage/>
     </div>
   );
 }

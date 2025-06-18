@@ -7,7 +7,7 @@ export async function PATCH(
   { params }: { params: { id: number } }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json(); // Get the update data from the client
 
     // Use serverApi to securely forward this to Django
@@ -36,7 +36,7 @@ export async function DELETE(
   { params }: { params: { id: number } }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const backendResponse = await serverApi(`/api/tasks/${id}/`, {
       method: 'DELETE',

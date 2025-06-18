@@ -27,7 +27,9 @@ const Navbar = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch('/api/auth/profile/'); // <-- Calling the Next.js proxy
+      const response = await fetch('/api/auth/profile/',
+        {credentials: 'include'} // access token expiration solve
+      ); // <-- Calling the Next.js proxy
       if (!response.ok) throw new Error("Failed to fetch");
       const profile = await response.json();
 

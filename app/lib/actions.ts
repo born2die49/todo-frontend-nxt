@@ -59,7 +59,7 @@ export async function handleLogin(userId: string, accessToken: string, refreshTo
   (await cookies()).set('session_access_token', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60, // 60 minutes
+      maxAge: 60 * 60, // one day
       path: '/'
   });
 

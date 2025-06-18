@@ -8,12 +8,14 @@ export function AddTaskForm() {
   const [taskName, setTaskName] = useState('');
   const [taskDueDate, setDueDate] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
     setError(null);
 
     if (!taskName) {
@@ -37,6 +39,8 @@ export function AddTaskForm() {
     } catch (err: any) {
       console.error("Failed to create task", err);
       setError(err.message || "An unknown error occurred.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -76,8 +80,12 @@ export function AddTaskForm() {
         />
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 hover:cursor-pointer">
-        Add Task
+      <button 
+        type="submit" 
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 hover:cursor-pointer"
+        disabled={isLoading}  
+      >
+        {isLoading? 'Adding' : 'Add Task'}
       </button>
     </form>
   )

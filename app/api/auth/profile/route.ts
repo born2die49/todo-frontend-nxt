@@ -3,7 +3,7 @@ import serverApi from '@/app/lib/serverApi';
 
 export async function GET(request: Request) {
   try {
-    const backendResponse = await serverApi('/api/auth/profile/');
+    const backendResponse = await serverApi('/api/auth/profile/',);
 
     const data = await backendResponse.json();
 

@@ -33,7 +33,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div 
-        className="fixed inset-0 bg-teal-50" 
+        className="fixed inset-0 bg-black/50 backdrop-blur-xs" // edit for modal background blur
         onClick={onClose}
       />
       <div className="bg-white rounded-lg shadow-xl z-10 w-full max-w-md mx-4 overflow-hidden">
