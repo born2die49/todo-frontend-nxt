@@ -4,10 +4,10 @@ import serverApi from '@/app/lib/serverApi';
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json(); // Get the update data from the client
 
     // Use serverApi to securely forward this to Django
@@ -33,10 +33,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const backendResponse = await serverApi(`/api/tasks/${id}/`, {
       method: 'DELETE',
