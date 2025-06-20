@@ -18,7 +18,7 @@ RUN npm run build
 
 # ===== Production Stage =====
 # Start from a fresh, lightweight Node.js image
-FROM node:18-alpine
+FROM node:22.13.1-alpine
 
 WORKDIR /app
 
