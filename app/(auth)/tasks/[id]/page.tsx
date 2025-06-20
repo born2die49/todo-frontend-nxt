@@ -4,7 +4,7 @@ import { Task } from "@/app/lib/definitions";
 
 // The params object will have the 'id' from the URL
 export default async function TaskDetailPage({ params }: { params: { id: string } }) {
-  const { id } = await params;
+  const { id } = params;
   let task: Task | null = null;
 
   try {
