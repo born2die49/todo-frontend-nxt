@@ -4,7 +4,7 @@ import serverApi from '@/app/lib/serverApi';
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params;
@@ -33,7 +33,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params;
